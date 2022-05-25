@@ -1,7 +1,7 @@
 #![allow(non_upper_case_globals)]
 #![allow(non_camel_case_types)]
 #![allow(non_snake_case)]
-use std::fmt;
+use std::{fmt, mem};
 use std::os::raw::c_uint;
 
 // pub const VCOS_ALIGN_DOWN: c_uint = mmal_fourcc!p,n) (((ptrdiff_t)(p)) & ~((n)-1));
@@ -280,14 +280,14 @@ pub const MMAL_EVENT_PARAMETER_CHANGED: c_uint = mmal_fourcc!('E', 'P', 'C', 'H'
 /// Note that there appears to be no constant for the null sink but it does exist in the
 /// binaries.
 /// If this ever breaks because C has this then we can delete this one.
-pub const MMAL_COMPONENT_NULL_SINK: &'static [u8; 13usize] = b"vc.null_sink\0";
+pub const MMAL_COMPONENT_NULL_SINK: &[u8; 13usize] = b"vc.null_sink\0";
 
 impl fmt::Display for MMAL_PARAMETER_CAMERA_INFO_CAMERA_T {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         write!(
             f,
             "{} {}x{}",
-            ::std::str::from_utf8(&self.camera_name).unwrap(),
+            ::std::str::from_utf8(unsafe { mem::transmute(self.camera_name) }).unwrap(),
             self.max_width,
             self.max_height
         )
