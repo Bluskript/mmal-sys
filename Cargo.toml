@@ -7,15 +7,15 @@ repository = "https://github.com/pedrosland/mmal-sys"
 documentation = "https://pedrosland.github.io/mmal-sys/"
 readme = "README.md"
 license = "MIT"
-categories = [ "external-ffi-bindings" ]
+categories = ["external-ffi-bindings"]
 keywords = ["raspberry", "pi", "rpi"]
 links = "mmal"
 build = "build.rs"
-exclude = [ "ci/*" ]
+exclude = ["ci/*"]
 edition = "2018"
 
 [dependencies]
-libc = "0.2.126"
+libc = "^0.2"
 
 [build-dependencies]
 bindgen = { version = "0.59.2", optional = true }
