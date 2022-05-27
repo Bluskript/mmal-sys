@@ -1,8 +1,9 @@
 #![allow(non_upper_case_globals)]
 #![allow(non_camel_case_types)]
 #![allow(non_snake_case)]
-use std::{fmt, mem};
+use std::ffi::CStr;
 use std::os::raw::c_uint;
+use std::{fmt, mem};
 
 // pub const VCOS_ALIGN_DOWN: c_uint = mmal_fourcc!p,n) (((ptrdiff_t)(p)) & ~((n)-1));
 // pub const VCOS_ALIGN_UP: c_uint = mmal_fourcc!p,n) VCOS_ALIGN_DOWN((ptrdiff_t)(p)+(n)-1,(n));
@@ -287,7 +288,9 @@ impl fmt::Display for MMAL_PARAMETER_CAMERA_INFO_CAMERA_T {
         write!(
             f,
             "{} {}x{}",
-            ::std::str::from_utf8(unsafe { mem::transmute(self.camera_name) }).unwrap(),
+            unsafe { CStr::from_ptr(self.camera_name.as_ptr()) }
+                .to_str()
+                .unwrap(),
             self.max_width,
             self.max_height
         )

@@ -20,7 +20,18 @@ PRs welcome. Breaking changes that make the library better to use eg changing
 
 Steps for improvement:
 
-* Evaluate if rust nightly is useful or switch on/off bindgen's nightly flag
-if running in nightly or not
-* Make API as natural as possible
-* Implement `fmt::Display` trait for more types or remove it entirely
+-   Evaluate if rust nightly is useful or switch on/off bindgen's nightly flag
+    if running in nightly or not
+-   Make API as natural as possible
+-   Implement `fmt::Display` trait for more types or remove it entirely
+
+## Compile on a non-pi host
+
+Find the latest raspberry pi firmware:
+https://github.com/raspberrypi/firmware/tags
+
+Substitude `$firmware` with the name of the latest tag.
+
+```bash
+sudo wget -O - https://github.com/raspberrypi/firmware/archive/$firmware.tar.gz | sudo tar -xzf - -C / --strip-components 2 firmware-$firmware/hardfp/opt/vc
+```
